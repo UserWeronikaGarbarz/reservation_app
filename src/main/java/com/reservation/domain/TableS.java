@@ -2,13 +2,16 @@ package com.reservation.domain;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@NoArgsConstructor
+@Component
 @Setter
-@Entity(name = "TABLES")
+@NoArgsConstructor
+@Entity
+@Table(name = "TABLES")
 public class TableS {
     private Long id;
     private int tableNumber;
@@ -39,7 +42,8 @@ public class TableS {
         return seatsQuantity;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
+            fetch = FetchType.LAZY)
     @JoinColumn(name = "RESERVATION_ID")
     public Reservation getReservation() {
         return reservation;

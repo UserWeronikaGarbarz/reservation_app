@@ -5,6 +5,7 @@ import com.reservation.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,5 +29,9 @@ public class ReservationService {
 
     public void deleteReservation(final Long id) {
         reservationRepository.deleteById(id);
+    }
+
+    public void deleteCompletedReservation(LocalDateTime dateTime) {
+        reservationRepository.deleteReservation(dateTime);
     }
 }

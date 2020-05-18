@@ -15,8 +15,8 @@ public class ReservationMapper {
                 reservationDto.getName(),
                 reservationDto.getSurname(),
                 reservationDto.getEmail(),
-                reservationDto.getDateOfReservation(),
-                reservationDto.getTables(),
+                reservationDto.getStartOfReservation(),
+                reservationDto.getEndOfReservation(),
                 reservationDto.getReservationDone()
         );
     }
@@ -27,8 +27,9 @@ public class ReservationMapper {
                 reservation.getName(),
                 reservation.getSurname(),
                 reservation.getEmail(),
-                reservation.getDateOfReservation(),
-                reservation.getTables(),
+                reservation.getStartOfReservation(),
+                reservation.getEndOfReservation(),
+                reservation.getTableS(),
                 reservation.getReservationDone()
         );
     }
@@ -36,7 +37,7 @@ public class ReservationMapper {
     public List<ReservationDto> mapToReservationDtoList(final List<Reservation> reservationList) {
         return reservationList.stream()
                 .map(r -> new ReservationDto(r.getId(), r.getName(), r.getSurname(), r.getEmail(),
-                        r.getDateOfReservation(), r.getTables(),
+                        r.getStartOfReservation(), r.getEndOfReservation(), r.getTableS(),
                         r.getReservationDone())).collect(Collectors.toList());
     }
 }

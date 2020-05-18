@@ -41,8 +41,13 @@ public class TableController {
         tableService.deleteTable(tableId);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/tasks")
+    @RequestMapping(method = RequestMethod.PUT, value = "/tables")
     public TableDto updateTable(@RequestBody TableDto tableDto) {
         return tableMapper.mapToTableDto(tableService.saveTable(tableMapper.mapToTable(tableDto)));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/tables/free")
+    public List<TableS> getFreeTables() {
+        return tableService.findFreeTables();
     }
 }

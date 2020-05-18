@@ -6,32 +6,36 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Component
 @NoArgsConstructor
 @Setter
-@Entity(name = "RESERVATION")
+@Entity
+@Table(name = "RESERVATION")
 public class Reservation {
     private Long id;
     private String name;
     private String surname;
     private String email;
-    private LocalDateTime dateOfReservation;
-    private List<TableS> tables = new ArrayList<>();
-    private Date reservationDone;
+    private LocalDateTime startOfReservation;
+    private LocalDateTime endOfReservation;
+    private List<TableS> tableS = new ArrayList<>();
+    private LocalDate reservationDone = LocalDate.now();
 
     public Reservation(final Long id, final String name, final String surname,
-                       final String email, final LocalDateTime dateOfReservation,
-                       final List<TableS> tables, final Date reservationDone) {
+                       final String email, final LocalDateTime startOfReservation,
+                       final LocalDateTime endOfReservation,
+                       final LocalDate reservationDone) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.dateOfReservation = dateOfReservation;
+        this.startOfReservation = startOfReservation;
+        this.endOfReservation = endOfReservation;
     }
 
     @Id
@@ -57,23 +61,25 @@ public class Reservation {
         return email;
     }
 
-    @Column(name = "DATE_OF_RESERVATION")
-    public LocalDateTime getDateOfReservation() {
-        return dateOfReservation;
+    @Column(name = "START_RESERVATION")
+    public LocalDateTime getStartOfReservation() {
+        return startOfReservation;
     }
 
-    @OneToMany(
-            targetEntity = TableS.class,
-            mappedBy = "reservation",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    public List<TableS> getTables() {
-        return tables;
+    @Column(name = "END_RESERVATION")
+    public LocalDateTime getEndOfReservation() {
+        return endOfReservation;
+    }
+
+    @OneToMany(mappedBy = "reservation",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
+            fetch = FetchType.LAZY)
+    public List<TableS> getTableS() {
+        return tableS;
     }
 
     @Column(name = "RESERVATION_DONE")
-    public Date getReservationDone() {
+    public LocalDate getReservationDone() {
         return reservationDone;
     }
 }

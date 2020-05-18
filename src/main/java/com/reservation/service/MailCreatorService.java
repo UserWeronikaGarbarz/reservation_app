@@ -23,12 +23,14 @@ public class MailCreatorService {
     private RestaurantConfig restaurantConfig;
 
     public String buildEmail(String message) {
-
         Context context = new Context();
         context.setVariable("name", reservation.getName());
         context.setVariable("surname", reservation.getSurname());
         context.setVariable("message", message);
-        context.setVariable("button", "Visit website");
+        context.setVariable("date", reservation.getReservationDone());
+        context.setVariable("start", reservation.getStartOfReservation());
+        context.setVariable("end", reservation.getEndOfReservation());
+        context.setVariable("button", "See our website");
         context.setVariable("reservation_url", "url_in_future");
         context.setVariable("goodbye", "Regards");
         context.setVariable("restaurant_name", restaurantConfig.getRestaurantName());

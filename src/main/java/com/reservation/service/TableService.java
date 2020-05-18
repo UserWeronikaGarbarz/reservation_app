@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class TableService {
     @Autowired
-    TableRepository tableRepository;
+    private TableRepository tableRepository;
 
     public List<TableS> getAllTables() {
         return tableRepository.findAll();
@@ -27,5 +27,9 @@ public class TableService {
 
     public void deleteTable(final Long id) {
         tableRepository.deleteById(id);
+    }
+
+    public List<TableS> findFreeTables() {
+        return tableRepository.findTableS();
     }
 }
