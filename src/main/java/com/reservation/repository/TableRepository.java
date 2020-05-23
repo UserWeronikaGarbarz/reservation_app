@@ -28,6 +28,6 @@ public interface TableRepository extends CrudRepository<TableS, Long> {
     @Override
     long count();
 
-    @Query(value = "select * from reservation.tables t where t.RESERVATION_ID is null", nativeQuery = true)
-    List<TableS> findTableS();
+//    @Query(value = "select * from reservation.tables t where t.RESERVATION_ID is null", nativeQuery = true)
+    List<TableS> findTableSByReservationIdIsNull();
 }

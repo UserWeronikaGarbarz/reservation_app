@@ -26,16 +26,15 @@ public class Reservation {
     private List<TableS> tableS = new ArrayList<>();
     private LocalDate reservationDone = LocalDate.now();
 
-    public Reservation(final Long id, final String name, final String surname,
+    public Reservation(final String name, final String surname,
                        final String email, final LocalDateTime startOfReservation,
-                       final LocalDateTime endOfReservation,
-                       final LocalDate reservationDone) {
-        this.id = id;
+                       final LocalDateTime endOfReservation, final List<TableS> tableS) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.startOfReservation = startOfReservation;
         this.endOfReservation = endOfReservation;
+        this.tableS = tableS;
     }
 
     @Id
@@ -71,9 +70,12 @@ public class Reservation {
         return endOfReservation;
     }
 
-    @OneToMany(mappedBy = "reservation",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
-            fetch = FetchType.LAZY)
+    @OneToMany(
+            targetEntity = TableS.class,
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(name = "RESERVATION_ID")
     public List<TableS> getTableS() {
         return tableS;
     }

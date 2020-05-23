@@ -1,6 +1,5 @@
 package com.reservation.controller;
 
-import com.reservation.domain.TableS;
 import com.reservation.dto.TableDto;
 import com.reservation.mapper.TableMapper;
 import com.reservation.service.TableService;
@@ -27,8 +26,8 @@ public class TableController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/tables", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public TableS createTable(@RequestBody TableDto tableDto) {
-        return tableService.saveTable(tableMapper.mapToTable(tableDto));
+    public TableDto createTable(@RequestBody TableDto tableDto) {
+        return tableMapper.mapToTableDto(tableService.saveTable(tableMapper.mapToTable(tableDto)));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/tables")
@@ -47,7 +46,7 @@ public class TableController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/tables/free")
-    public List<TableS> getFreeTables() {
-        return tableService.findFreeTables();
+    public List<TableDto> getFreeTables() {
+        return tableMapper.mapToTableDtoList(tableService.findFreeTables());
     }
 }

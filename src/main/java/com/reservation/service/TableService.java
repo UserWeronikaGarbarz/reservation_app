@@ -30,6 +30,6 @@ public class TableService {
     }
 
     public List<TableS> findFreeTables() {
-        return tableRepository.findTableS();
+        return tableRepository.findTableSByReservationIdIsNull();
     }
 }

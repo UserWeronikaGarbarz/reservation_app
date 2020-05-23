@@ -11,7 +11,7 @@ public class RestaurantConfig {
     @Value("${info.company.name}")
     private String restaurantName;
 
-    @Value("Sample address")
+    @Value("${info.company.address}")
     private String restaurantAddress;
 
     @Value("${info.company.email}")

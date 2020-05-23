@@ -1,6 +1,7 @@
 package com.reservation.service;
 
 import com.reservation.domain.Mail;
+import com.reservation.domain.Reservation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class MailService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MailService.class);
 
     @Autowired
-    private JavaMailSender javaMailSender;
+    JavaMailSender javaMailSender;
 
     @Autowired
     private MailCreatorService mailCreatorService;

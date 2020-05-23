@@ -1,6 +1,5 @@
 package com.reservation.controller;
 
-import com.reservation.domain.Reservation;
 import com.reservation.dto.ReservationDto;
 import com.reservation.mapper.ReservationMapper;
 import com.reservation.service.ReservationService;
@@ -21,14 +20,16 @@ public class ReservationController {
     @Autowired
     private ReservationMapper reservationMapper;
 
+
     @RequestMapping(method = RequestMethod.GET, value = "/reservations")
     public List<ReservationDto> getAllReservations() {
         return reservationMapper.mapToReservationDtoList(reservationService.getAllReservations());
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/reservations", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Reservation createReservation(@RequestBody ReservationDto reservationDto) {
-        return reservationService.saveReservation(reservationMapper.mapToReservation(reservationDto));
+    public ReservationDto createReservation(@RequestBody ReservationDto reservationDto) {
+        return reservationMapper.mapToReservationDto(reservationService.saveReservation
+                (reservationMapper.mapToReservation(reservationDto)));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/reservations/{reservationId}")

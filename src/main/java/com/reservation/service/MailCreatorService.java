@@ -13,9 +13,6 @@ import org.thymeleaf.context.Context;
 public class MailCreatorService {
 
     @Autowired
-    private Reservation reservation;
-
-    @Autowired
     @Qualifier("templateEngine")
     private TemplateEngine templateEngine;
 
@@ -24,6 +21,7 @@ public class MailCreatorService {
 
     public String buildEmail(String message) {
         Context context = new Context();
+        Reservation reservation = new Reservation();
         context.setVariable("name", reservation.getName());
         context.setVariable("surname", reservation.getSurname());
         context.setVariable("message", message);

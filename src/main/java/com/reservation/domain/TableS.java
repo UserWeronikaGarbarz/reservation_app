@@ -16,12 +16,12 @@ public class TableS {
     private Long id;
     private int tableNumber;
     private int seatsQuantity;
-    private Reservation reservation;
+    private Long reservationId;
 
-    public TableS(final Long id, final int tableNumber, final int seatsQuantity) {
-        this.id = id;
+    public TableS(final int tableNumber, final int seatsQuantity, final Long id) {
         this.tableNumber = tableNumber;
         this.seatsQuantity = seatsQuantity;
+        this.id = id;
     }
 
     @Id
@@ -42,10 +42,8 @@ public class TableS {
         return seatsQuantity;
     }
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
-            fetch = FetchType.LAZY)
-    @JoinColumn(name = "RESERVATION_ID")
-    public Reservation getReservation() {
-        return reservation;
+    @Column(name = "RESERVATION_ID")
+    public Long getReservationId() {
+        return reservationId;
     }
 }

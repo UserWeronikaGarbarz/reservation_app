@@ -1,18 +1,16 @@
 package com.reservation.dto;
 
-import com.reservation.domain.TableS;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ReservationDto {
     private Long id;
@@ -21,6 +19,17 @@ public class ReservationDto {
     private String email;
     private LocalDateTime startOfReservation;
     private LocalDateTime endOfReservation;
-    private List<TableS> tableS;
+    private List<TableDto> tableDtos = new ArrayList<>();
     private LocalDate reservationDone = LocalDate.now();
+
+    public ReservationDto(final String name, final String surname, final String email,
+                          final LocalDateTime startOfReservation, final LocalDateTime endOfReservation,
+                          final List<TableDto> tableDtos) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.startOfReservation = startOfReservation;
+        this.endOfReservation = endOfReservation;
+        this.tableDtos = tableDtos;
+    }
 }
