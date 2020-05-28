@@ -9,6 +9,9 @@ import org.thymeleaf.TemplateEngine;
 
 import org.thymeleaf.context.Context;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Service
 public class MailCreatorService {
 
@@ -19,15 +22,15 @@ public class MailCreatorService {
     @Autowired
     private RestaurantConfig restaurantConfig;
 
-    public String buildEmail(String message) {
+    public String buildEmail(String message, String name, String surname, LocalDate done, LocalDateTime start,
+                             LocalDateTime end) {
         Context context = new Context();
-        Reservation reservation = new Reservation();
-        context.setVariable("name", reservation.getName());
-        context.setVariable("surname", reservation.getSurname());
+        context.setVariable("name", name);
+        context.setVariable("surname", surname);
+        context.setVariable("date", done);
+        context.setVariable("start", start);
+        context.setVariable("end", end);
         context.setVariable("message", message);
-        context.setVariable("date", reservation.getReservationDone());
-        context.setVariable("start", reservation.getStartOfReservation());
-        context.setVariable("end", reservation.getEndOfReservation());
         context.setVariable("button", "See our website");
         context.setVariable("reservation_url", "url_in_future");
         context.setVariable("goodbye", "Regards");

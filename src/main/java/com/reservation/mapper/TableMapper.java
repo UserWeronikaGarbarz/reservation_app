@@ -11,9 +11,6 @@ import java.util.stream.Collectors;
 @Component
 public class TableMapper {
 
-    @Autowired
-    ReservationMapper reservationMapper;
-
     public TableS mapToTable(final TableDto tableDto) {
         return new TableS(
                 tableDto.getTableNumber(),

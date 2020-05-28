@@ -31,6 +31,9 @@ public interface ReservationRepository extends CrudRepository<Reservation, Long>
     @Override
     long count();
 
+    @Query("select r.id from Reservation r where r.endOfReservation<=:date")
+    List<Long> findReservationId(@Param("date") LocalDateTime dateTime);
+
     @Modifying
     @Query("delete from Reservation r where r.endOfReservation<=:date")
     void deleteReservation(@Param("date") LocalDateTime dateTime);

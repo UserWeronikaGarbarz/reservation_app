@@ -16,7 +16,7 @@ public class MailService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MailService.class);
 
     @Autowired
-    JavaMailSender javaMailSender;
+    private JavaMailSender javaMailSender;
 
     @Autowired
     private MailCreatorService mailCreatorService;
@@ -33,9 +33,10 @@ public class MailService {
     private MimeMessagePreparator createMimeMessage(final Mail mail) {
         return mimeMessage -> {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
-            mimeMessageHelper.setTo(mail.getReceiver());
+            mimeMessageHelper.setTo(mail.getEmail());
             mimeMessageHelper.setSubject(mail.getSubject());
-            mimeMessageHelper.setText(mailCreatorService.buildEmail(mail.getMessage()), true);
+            mimeMessageHelper.setText(mailCreatorService.buildEmail(mail.getMessage(), mail.getReceiverName(),
+                    mail.getReceiverSurname(), mail.getDone(), mail.getStart(), mail.getEnd()), true);
         };
     }
 }

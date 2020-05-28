@@ -5,12 +5,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Mail {
-    private String receiver;
+    private String email;
     private String subject;
     private String message;
+    private String receiverName;
+    private String receiverSurname;
+    private LocalDate done;
+    private LocalDateTime start;
+    private LocalDateTime end;
 }

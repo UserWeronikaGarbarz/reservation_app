@@ -1,8 +1,10 @@
 package com.reservation.repository;
 
 import com.reservation.domain.TableS;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,4 +32,9 @@ public interface TableRepository extends CrudRepository<TableS, Long> {
 
 //    @Query(value = "select * from reservation.tables t where t.RESERVATION_ID is null", nativeQuery = true)
     List<TableS> findTableSByReservationIdIsNull();
+
+    @Modifying
+    @Query("update TableS set reservationId = null where reservationId=:reservId")
+    void updateTable(@Param("reservId") Long id);
+
 }

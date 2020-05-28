@@ -29,7 +29,9 @@ public class ReservationService {
 
     public Reservation saveReservation(final Reservation reservation) {
         Reservation savedReservation = reservationRepository.save(reservation);
-        mailService.send(new Mail(reservation.getEmail(), "Reservation", "Your reservation has been registered"));
+        mailService.send(new Mail(reservation.getEmail(), "Reservation", "Your reservation has been registered",
+                reservation.getName(), reservation.getSurname(), reservation.getReservationDone(),
+                reservation.getStartOfReservation(), reservation.getEndOfReservation()));
         return savedReservation;
     }
 
@@ -39,5 +41,9 @@ public class ReservationService {
 
     public void deleteCompletedReservation(LocalDateTime dateTime) {
         reservationRepository.deleteReservation(dateTime);
+    }
+
+    public  List<Long> findReservationId(final LocalDateTime dateTime) {
+        return reservationRepository.findReservationId(dateTime);
     }
 }

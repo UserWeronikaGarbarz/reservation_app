@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class ReservationMapper {
 
     @Autowired
-    TableMapper tableMapper;
+    private TableMapper tableMapper;
 
     public Reservation mapToReservation(final ReservationDto reservationDto) {
         return new Reservation(
@@ -27,6 +27,7 @@ public class ReservationMapper {
 
     public ReservationDto mapToReservationDto(final Reservation reservation) {
         return new ReservationDto(
+                reservation.getId(),
                 reservation.getName(),
                 reservation.getSurname(),
                 reservation.getEmail(),
@@ -38,7 +39,7 @@ public class ReservationMapper {
 
     public List<ReservationDto> mapToReservationDtoList(final List<Reservation> reservationList) {
         return reservationList.stream()
-                .map(r -> new ReservationDto(r.getName(), r.getSurname(), r.getEmail(),
+                .map(r -> new ReservationDto(r.getId(), r.getName(), r.getSurname(), r.getEmail(),
                         r.getStartOfReservation(), r.getEndOfReservation(),
                         tableMapper.mapToTableDtoList(r.getTableS())))
                 .collect(Collectors.toList());

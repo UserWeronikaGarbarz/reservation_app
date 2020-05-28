@@ -32,4 +32,8 @@ public class TableService {
     public List<TableS> findFreeTables() {
         return tableRepository.findTableSByReservationIdIsNull();
     }
+
+    public void updateTableS(Long id) {
+        tableRepository.updateTable(id);
+    }
 }

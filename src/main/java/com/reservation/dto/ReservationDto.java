@@ -22,9 +22,10 @@ public class ReservationDto {
     private List<TableDto> tableDtos = new ArrayList<>();
     private LocalDate reservationDone = LocalDate.now();
 
-    public ReservationDto(final String name, final String surname, final String email,
+    public ReservationDto(final Long id, final String name, final String surname, final String email,
                           final LocalDateTime startOfReservation, final LocalDateTime endOfReservation,
                           final List<TableDto> tableDtos) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
