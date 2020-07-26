@@ -21,10 +21,11 @@ public class ReservationDto {
     private LocalDateTime endOfReservation;
     private List<TableDto> tableDtos = new ArrayList<>();
     private LocalDate reservationDone = LocalDate.now();
+    private Long restaurantId;
 
     public ReservationDto(final Long id, final String name, final String surname, final String email,
                           final LocalDateTime startOfReservation, final LocalDateTime endOfReservation,
-                          final List<TableDto> tableDtos) {
+                          final List<TableDto> tableDtos, final Long restaurantId) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -32,5 +33,6 @@ public class ReservationDto {
         this.startOfReservation = startOfReservation;
         this.endOfReservation = endOfReservation;
         this.tableDtos = tableDtos;
+        this.restaurantId = restaurantId;
     }
 }

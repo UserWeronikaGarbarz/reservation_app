@@ -30,7 +30,7 @@ public class TableService {
     }
 
     public List<TableS> findFreeTables() {
-        return tableRepository.findTableSByReservationIdIsNull();
+        return tableRepository.findTableSByReservationsIsNull();
     }
 
     public void updateTableS(Long id) {

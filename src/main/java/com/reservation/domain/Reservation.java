@@ -25,22 +25,25 @@ public class Reservation {
     private LocalDateTime endOfReservation;
     private List<TableS> tableS = new ArrayList<>();
     private LocalDate reservationDone = LocalDate.now();
+    private Long restaurantId;
+    private Guest guest;
 
     public Reservation(final String name, final String surname,
                        final String email, final LocalDateTime startOfReservation,
-                       final LocalDateTime endOfReservation, final List<TableS> tableS) {
+                       final LocalDateTime endOfReservation, final List<TableS> tableS, final Long restaurantId) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.startOfReservation = startOfReservation;
         this.endOfReservation = endOfReservation;
         this.tableS = tableS;
+        this.restaurantId = restaurantId;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "ID", unique = true)
+    @Column(name = "RESERVATION_ID", unique = true)
     public Long getId() {
         return id;
     }
@@ -70,12 +73,12 @@ public class Reservation {
         return endOfReservation;
     }
 
-    @OneToMany(
-            targetEntity = TableS.class,
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "JOIN_TABLES_RESERVAION",
+            joinColumns = {@JoinColumn(name = "RESERVATION_ID", referencedColumnName = "RESERVATION_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "TABLE_ID", referencedColumnName = "TABLE_ID")}
     )
-    @JoinColumn(name = "RESERVATION_ID")
     public List<TableS> getTableS() {
         return tableS;
     }
@@ -83,5 +86,16 @@ public class Reservation {
     @Column(name = "RESERVATION_DONE")
     public LocalDate getReservationDone() {
         return reservationDone;
+    }
+
+    @Column(name = "RESTAURANT_ID")
+    public Long getRestaurantId() {
+        return restaurantId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "GUEST_ID")
+    public Guest getGuest() {
+        return guest;
     }
 }

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Setter
@@ -16,7 +18,8 @@ public class TableS {
     private Long id;
     private int tableNumber;
     private int seatsQuantity;
-    private Long reservationId;
+    private Long restaurantId;
+    private List<Reservation> reservations = new ArrayList<>();
 
     public TableS(final int tableNumber, final int seatsQuantity, final Long id) {
         this.tableNumber = tableNumber;
@@ -27,7 +30,7 @@ public class TableS {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "ID", unique = true)
+    @Column(name = "TABLE_ID", unique = true)
     public Long getId() {
         return id;
     }
@@ -42,8 +45,13 @@ public class TableS {
         return seatsQuantity;
     }
 
-    @Column(name = "RESERVATION_ID")
-    public Long getReservationId() {
-        return reservationId;
+    @Column(name = "RESTAURANT_ID")
+    public Long getRestaurantId() {
+        return restaurantId;
+    }
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "tableS")
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 }

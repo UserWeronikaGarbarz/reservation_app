@@ -31,10 +31,10 @@ public interface TableRepository extends CrudRepository<TableS, Long> {
     long count();
 
 //    @Query(value = "select * from reservation.tables t where t.RESERVATION_ID is null", nativeQuery = true)
-    List<TableS> findTableSByReservationIdIsNull();
+    List<TableS> findTableSByReservationsIsNull();
 
     @Modifying
-    @Query("update TableS set reservationId = null where reservationId=:reservId")
+    @Query("update TableS set reservations = null where reservations=:reservId")
     void updateTable(@Param("reservId") Long id);
 
 }
