@@ -23,10 +23,10 @@ dependencies {
     annotationProcessor'org.projectlombok:lombok'
 
 //    heroku
-//	compile 'org.postgresql:postgresql'
+	compile 'org.postgresql:postgresql'
 
 //     zawiera sterownik JDBC dla bazy MySQL.
-    compile 'mysql:mysql-connector-java'
+//    compile 'mysql:mysql-connector-java'
 
     // zawiera biblioteki potrzebne do obsługi standardu JPA, w tym framework Hibernate.
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
