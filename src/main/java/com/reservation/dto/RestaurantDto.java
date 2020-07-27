@@ -15,6 +15,7 @@ import java.util.List;
 @Setter
 @Getter
 public class RestaurantDto {
+    private int id;
     private String name;
     private String street;
     private int number;

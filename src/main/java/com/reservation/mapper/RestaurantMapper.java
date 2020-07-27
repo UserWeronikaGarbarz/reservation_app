@@ -15,26 +15,44 @@ public class RestaurantMapper {
     private TableMapper tableMapper;
 
     public Restaurant mapToRestaurant(RestaurantDto restaurantDto) {
-        return new Restaurant(restaurantDto.getName(), restaurantDto.getStreet(),
-                restaurantDto.getNumber(), restaurantDto.getCode(), restaurantDto.getEmail(), restaurantDto.getPassword(),
+        return new Restaurant(
+                restaurantDto.getId(),
+                restaurantDto.getName(),
+                restaurantDto.getStreet(),
+                restaurantDto.getNumber(),
+                restaurantDto.getCode(),
+                restaurantDto.getEmail(),
+                restaurantDto.getPassword(),
                 tableMapper.mapToTableList(restaurantDto.getTables()));
     }
 
     public RestaurantDto mapToRestaurantDto(Restaurant restaurant) {
-        return new RestaurantDto(restaurant.getName(), restaurant.getStreet(),
-                restaurant.getNumber(), restaurant.getCode(), restaurant.getEmail(), restaurant.getPassword(),
+        return new RestaurantDto(
+                restaurant.getId(),
+                restaurant.getName(),
+                restaurant.getStreet(),
+                restaurant.getNumber(),
+                restaurant.getCode(),
+                restaurant.getEmail(),
+                restaurant.getPassword(),
                 tableMapper.mapToTableDtoList(restaurant.getTables()));
     }
 
     public List<RestaurantDto> mapToListRestaurantDto(List<Restaurant> restaurantList) {
         return restaurantList.stream()
-                .map(r -> new RestaurantDto(r.getName(), r.getStreet(), r.getNumber(), r.getCode(),
-                        r.getEmail(), r.getPassword(), tableMapper.mapToTableDtoList(r.getTables()))).collect(Collectors.toList());
+                .map(r -> new RestaurantDto(r.getId(),
+                        r.getName(), r.getStreet(), r.getNumber(), r.getCode(),
+                        r.getEmail(), r.getPassword(),
+                        tableMapper.mapToTableDtoList(r.getTables())))
+                .collect(Collectors.toList());
     }
 
     public List<Restaurant> mapToListRestaurant(List<RestaurantDto> restaurantDtoList) {
         return restaurantDtoList.stream()
-                .map(r -> new Restaurant(r.getName(), r.getStreet(), r.getNumber(), r.getCode(),
-                        r.getEmail(), r.getPassword(), tableMapper.mapToTableList(r.getTables()))).collect(Collectors.toList());
+                .map(r -> new Restaurant(r.getId(),
+                        r.getName(), r.getStreet(), r.getNumber(), r.getCode(),
+                        r.getEmail(), r.getPassword(),
+                        tableMapper.mapToTableList(r.getTables())))
+                .collect(Collectors.toList());
     }
 }

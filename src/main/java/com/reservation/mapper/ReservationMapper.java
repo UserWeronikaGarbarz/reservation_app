@@ -50,7 +50,9 @@ public class ReservationMapper {
     public List<Reservation> mapToReservationList(final List<ReservationDto> reservationDtoList) {
         return reservationDtoList.stream()
                 .map(r -> new Reservation(r.getName(), r.getSurname(), r.getEmail(),
-                        r.getStartOfReservation(), r.getEndOfReservation(), tableMapper.mapToTableList(r.getTableDtos()),
-                        r.getRestaurantId())).collect(Collectors.toList());
+                        r.getStartOfReservation(), r.getEndOfReservation(),
+                        tableMapper.mapToTableList(r.getTableDtos()),
+                        r.getRestaurantId()))
+                .collect(Collectors.toList());
     }
 }

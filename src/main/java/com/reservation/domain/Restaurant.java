@@ -26,7 +26,8 @@ public class Restaurant {
     private List<Reservation> reservations = new ArrayList<>();
     private List<Guest> guests = new ArrayList<>();
 
-    public Restaurant(String name, String street, int number, String code, String email, String password, List<TableS> tableS) {
+    public Restaurant(int id, String name, String street, int number, String code, String email, String password, List<TableS> tableS) {
+        this.id = id;
         this.name = name;
         this.street = street;
         this.number = number;
@@ -37,7 +38,7 @@ public class Restaurant {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     @Column(name = "RESTAURANT_ID", unique = true)
     public int getId() {
