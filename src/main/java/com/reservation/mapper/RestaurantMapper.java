@@ -14,45 +14,88 @@ public class RestaurantMapper {
     @Autowired
     private TableMapper tableMapper;
 
+    @Autowired
+    private ReservationMapper reservationMapper;
+
+    @Autowired
+    private GuestMapper guestMapper;
+
     public Restaurant mapToRestaurant(RestaurantDto restaurantDto) {
         return new Restaurant(
                 restaurantDto.getId(),
                 restaurantDto.getName(),
+                restaurantDto.getUsername(),
                 restaurantDto.getStreet(),
                 restaurantDto.getNumber(),
                 restaurantDto.getCode(),
                 restaurantDto.getEmail(),
                 restaurantDto.getPassword(),
-                tableMapper.mapToTableList(restaurantDto.getTables()));
+                tableMapper.mapToTableList(restaurantDto.getTables()),
+                restaurantDto.getLastLoginDate(),
+                restaurantDto.getLastLoginDateDisplay(),
+                restaurantDto.getJoinDate(),
+                reservationMapper.mapToReservationList(restaurantDto.getReservations()),
+                guestMapper.mapToGuestList(restaurantDto.getGuests())
+
+        );
     }
 
     public RestaurantDto mapToRestaurantDto(Restaurant restaurant) {
         return new RestaurantDto(
                 restaurant.getId(),
                 restaurant.getName(),
+                restaurant.getUsername(),
                 restaurant.getStreet(),
                 restaurant.getNumber(),
                 restaurant.getCode(),
                 restaurant.getEmail(),
                 restaurant.getPassword(),
-                tableMapper.mapToTableDtoList(restaurant.getTables()));
+                restaurant.getLastLoginDate(),
+                restaurant.getLastLoginDateDisplay(),
+                restaurant.getJoinDate(),
+                tableMapper.mapToTableDtoList(restaurant.getTables()),
+                reservationMapper.mapToReservationDtoList(restaurant.getReservations()),
+                guestMapper.mapToGuestDtoList(restaurant.getGuests())
+        );
     }
 
     public List<RestaurantDto> mapToListRestaurantDto(List<Restaurant> restaurantList) {
         return restaurantList.stream()
-                .map(r -> new RestaurantDto(r.getId(),
-                        r.getName(), r.getStreet(), r.getNumber(), r.getCode(),
-                        r.getEmail(), r.getPassword(),
-                        tableMapper.mapToTableDtoList(r.getTables())))
+                .map(r -> new RestaurantDto(
+                        r.getId(),
+                        r.getName(),
+                        r.getUsername(),
+                        r.getStreet(),
+                        r.getNumber(),
+                        r.getCode(),
+                        r.getEmail(),
+                        r.getPassword(),
+                        r.getLastLoginDate(),
+                        r.getLastLoginDateDisplay(),
+                        r.getJoinDate(),
+                        tableMapper.mapToTableDtoList(r.getTables()),
+                        reservationMapper.mapToReservationDtoList(r.getReservations()),
+                        guestMapper.mapToGuestDtoList(r.getGuests())))
                 .collect(Collectors.toList());
     }
 
     public List<Restaurant> mapToListRestaurant(List<RestaurantDto> restaurantDtoList) {
         return restaurantDtoList.stream()
-                .map(r -> new Restaurant(r.getId(),
-                        r.getName(), r.getStreet(), r.getNumber(), r.getCode(),
-                        r.getEmail(), r.getPassword(),
-                        tableMapper.mapToTableList(r.getTables())))
+                .map(r -> new Restaurant(
+                        r.getId(),
+                        r.getName(),
+                        r.getUsername(),
+                        r.getStreet(),
+                        r.getNumber(),
+                        r.getCode(),
+                        r.getEmail(),
+                        r.getPassword(),
+                        tableMapper.mapToTableList(r.getTables()),
+                        r.getLastLoginDate(),
+                        r.getLastLoginDateDisplay(),
+                        r.getJoinDate(),
+                        reservationMapper.mapToReservationList(r.getReservations()),
+                        guestMapper.mapToGuestList(r.getGuests())))
                 .collect(Collectors.toList());
     }
 }

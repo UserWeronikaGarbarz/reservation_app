@@ -41,16 +41,26 @@ public class ReservationMapper {
 
     public List<ReservationDto> mapToReservationDtoList(final List<Reservation> reservationList) {
         return reservationList.stream()
-                .map(r -> new ReservationDto(r.getId(), r.getName(), r.getSurname(), r.getEmail(),
-                        r.getStartOfReservation(), r.getEndOfReservation(),
-                        tableMapper.mapToTableDtoList(r.getTableS()), r.getRestaurantId()))
+                .map(r -> new ReservationDto(
+                        r.getId(),
+                        r.getName(),
+                        r.getSurname(),
+                        r.getEmail(),
+                        r.getStartOfReservation(),
+                        r.getEndOfReservation(),
+                        tableMapper.mapToTableDtoList(r.getTableS()),
+                        r.getRestaurantId()))
                 .collect(Collectors.toList());
     }
 
     public List<Reservation> mapToReservationList(final List<ReservationDto> reservationDtoList) {
         return reservationDtoList.stream()
-                .map(r -> new Reservation(r.getName(), r.getSurname(), r.getEmail(),
-                        r.getStartOfReservation(), r.getEndOfReservation(),
+                .map(r -> new Reservation(
+                        r.getName(),
+                        r.getSurname(),
+                        r.getEmail(),
+                        r.getStartOfReservation(),
+                        r.getEndOfReservation(),
                         tableMapper.mapToTableList(r.getTableDtos()),
                         r.getRestaurantId()))
                 .collect(Collectors.toList());

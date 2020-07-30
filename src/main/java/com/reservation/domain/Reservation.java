@@ -75,7 +75,7 @@ public class Reservation {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "JOIN_TABLES_RESERVAION",
+            name = "JOIN_TABLES_RESERVATION",
             joinColumns = {@JoinColumn(name = "RESERVATION_ID", referencedColumnName = "RESERVATION_ID")},
             inverseJoinColumns = {@JoinColumn(name = "TABLE_ID", referencedColumnName = "TABLE_ID")}
     )

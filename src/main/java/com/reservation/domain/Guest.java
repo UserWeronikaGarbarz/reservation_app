@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -18,10 +19,16 @@ import java.util.List;
 @Table(name = "GUEST")
 public class Guest {
     private int id;
+    private String userId;
     private String name;
     private String surname;
+    private String username;
     private String email;
     private String password;
+    private Date lastLoginDate;
+    private Date lastLoginDateDisplay;
+    private Date joinDate;
+    private boolean isActive;
     private List<Reservation> reservationList = new ArrayList<>();
     private List<Restaurant> restaurantList = new ArrayList<>();
 
@@ -33,22 +40,22 @@ public class Guest {
         return id;
     }
 
-    @Column(name = "email")
+    @Column(name = "EMAIL")
     public String getEmail() {
         return email;
     }
 
-    @Column(name = "password")
+    @Column(name = "PASSWORD")
     public String getPassword() {
         return password;
     }
 
-    @Column(name = "name")
+    @Column(name = "NAME")
     public String getName() {
         return name;
     }
 
-    @Column(name = "surname")
+    @Column(name = "SURNAME")
     public String getSurname() {
         return surname;
     }
@@ -71,5 +78,35 @@ public class Guest {
     )
     public List<Restaurant> getRestaurantList() {
         return restaurantList;
+    }
+
+    @Column(name="USER_ID")
+    public String getUserId() {
+        return userId;
+    }
+
+    @Column(name="USERNAME")
+    public String getUsername() {
+        return username;
+    }
+
+    @Column(name="LAST_LOGIN_DATE")
+    public Date getLastLoginDate() {
+        return lastLoginDate;
+    }
+
+    @Column(name="LAST_LOGIN_DATE_DISPLAYED")
+    public Date getLastLoginDateDisplay() {
+        return lastLoginDateDisplay;
+    }
+
+    @Column(name="JOIN_DATE")
+    public Date getJoinDate() {
+        return joinDate;
+    }
+
+    @Column(name="IS_ACTIVE")
+    public boolean isActive() {
+        return isActive;
     }
 }

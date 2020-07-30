@@ -5,6 +5,9 @@ import com.reservation.dto.GuestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class GuestMapper {
 
@@ -14,26 +17,78 @@ public class GuestMapper {
     @Autowired
     private RestaurantMapper restaurantMapper;
 
-//    public Guest mapToGuest(GuestDto guestDto) {
-//        return new Guest(
-//                guestDto.getId(),
-//                guestDto.getEmail(),
-//                guestDto.getName(),
-//                guestDto.getSurname(),
-//                guestDto.getPassword(),
-//                reservationMapper.mapToReservationList(guestDto.getReservationList()),
-//                restaurantMapper.mapToRestaurant(guestDto.getRestaurantDtoList())
-//        );
-//    }
+    public Guest mapToGuest(GuestDto guestDto) {
+        return new Guest(
+                guestDto.getId(),
+                guestDto.getUserId(),
+                guestDto.getName(),
+                guestDto.getSurname(),
+                guestDto.getUsername(),
+                guestDto.getEmail(),
+                guestDto.getPassword(),
+                guestDto.getLastLoginDate(),
+                guestDto.getLastLoginDateDisplay(),
+                guestDto.getJoinDate(),
+                guestDto.isActive(),
+                reservationMapper.mapToReservationList(guestDto.getReservationList()),
+                restaurantMapper.mapToListRestaurant(guestDto.getRestaurantDtoList())
+        );
+    }
 
-//    public GuestDto mapToGuestDto(Guest guest) {
-//        return new GuestDto(
-//                guest.getId(),
-//                guest.getName(),
-//                guest.getSurname(),
-//                guest.getEmail(),
-//                guest.getPassword(),
-//                reservationMapper.mapToReservationDtoList(guest.getReservationList())
-//        );
-//    }
+    public GuestDto mapToGuestDto(Guest guest) {
+        return new GuestDto(
+                guest.getId(),
+                guest.getUserId(),
+                guest.getName(),
+                guest.getSurname(),
+                guest.getUsername(),
+                guest.getEmail(),
+                guest.getPassword(),
+                guest.getLastLoginDate(),
+                guest.getLastLoginDateDisplay(),
+                guest.getJoinDate(),
+                guest.isActive(),
+                reservationMapper.mapToReservationDtoList(guest.getReservationList()),
+                restaurantMapper.mapToListRestaurantDto(guest.getRestaurantList())
+
+        );
+    }
+
+    public List<Guest> mapToGuestList(List<GuestDto> guestDtoList) {
+        return guestDtoList.stream()
+                .map(g -> new Guest(
+                        g.getId(),
+                        g.getUserId(),
+                        g.getName(),
+                        g.getSurname(),
+                        g.getUsername(),
+                        g.getEmail(),
+                        g.getPassword(),
+                        g.getLastLoginDate(),
+                        g.getLastLoginDateDisplay(),
+                        g.getJoinDate(),
+                        g.isActive(),
+                        reservationMapper.mapToReservationList(g.getReservationList()),
+                        restaurantMapper.mapToListRestaurant(g.getRestaurantDtoList())))
+                .collect(Collectors.toList());
+    }
+
+    public List<GuestDto> mapToGuestDtoList(List<Guest> guestList) {
+        return guestList.stream()
+                .map(g -> new GuestDto(
+                        g.getId(),
+                        g.getUserId(),
+                        g.getName(),
+                        g.getSurname(),
+                        g.getUsername(),
+                        g.getEmail(),
+                        g.getPassword(),
+                        g.getLastLoginDate(),
+                        g.getLastLoginDateDisplay(),
+                        g.getJoinDate(),
+                        g.isActive(),
+                        reservationMapper.mapToReservationDtoList(g.getReservationList()),
+                        restaurantMapper.mapToListRestaurantDto(g.getRestaurantList())))
+                .collect(Collectors.toList());
+    }
 }

@@ -29,12 +29,19 @@ public class TableMapper {
 
     public List<TableDto> mapToTableDtoList(final List<TableS> tableSList) {
         return tableSList.stream()
-                .map(t -> new TableDto(t.getTableNumber(), t.getSeatsQuantity(), t.getId()))
-                .collect(Collectors.toList());
+                .map(t -> new TableDto(
+                        t.getTableNumber(),
+                        t.getSeatsQuantity(),
+                        t.getId())
+                ).collect(Collectors.toList());
     }
+
     public List<TableS> mapToTableList(final List<TableDto> tableDtoList) {
-        return  tableDtoList.stream()
-                .map(t -> new TableS(t.getTableNumber(), t.getSeatsQuantity(), t.getId()))
-                .collect(Collectors.toList());
+        return tableDtoList.stream()
+                .map(t -> new TableS(
+                        t.getTableNumber(),
+                        t.getSeatsQuantity(),
+                        t.getId())
+                ).collect(Collectors.toList());
     }
 }
