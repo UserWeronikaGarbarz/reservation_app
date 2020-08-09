@@ -7,9 +7,14 @@ import java.util.List;
 
 public interface GuestRepository extends CrudRepository<Guest, Long> {
 
+
     @Override
     List<Guest> findAll();
 
     @Override
     Guest save(Guest guest);
+
+    Guest findGuestByUsername(String username);
+
+    Guest findGuestByEmail(String email);
 }

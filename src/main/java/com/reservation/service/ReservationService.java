@@ -1,6 +1,6 @@
 package com.reservation.service;
 
-import com.reservation.domain.Mail;
+import com.reservation.domain.MailReservation;
 import com.reservation.domain.Reservation;
 import com.reservation.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +29,9 @@ public class ReservationService {
 
     public Reservation saveReservation(final Reservation reservation) {
         Reservation savedReservation = reservationRepository.save(reservation);
-        mailService.send(new Mail(reservation.getEmail(), "Reservation", "Your reservation has been registered",
-                reservation.getName(), reservation.getSurname(), reservation.getReservationDone(),
-                reservation.getStartOfReservation(), reservation.getEndOfReservation()));
+        mailService.send(new MailReservation(reservation.getEmail(),"New reservation in ", "Your reservation has been created", reservation.getName(),
+                reservation.getSurname(), reservation.getStartOfReservation(), reservation.getEndOfReservation(),
+                reservation.getReservationDone()));
         return savedReservation;
     }
 
@@ -43,7 +43,7 @@ public class ReservationService {
         reservationRepository.deleteReservation(dateTime);
     }
 
-    public  List<Long> findReservationId(final LocalDateTime dateTime) {
+    public List<Long> findReservationId(final LocalDateTime dateTime) {
         return reservationRepository.findReservationId(dateTime);
     }
 }

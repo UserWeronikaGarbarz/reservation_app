@@ -15,6 +15,9 @@ public interface RestaurantRepository extends CrudRepository<Restaurant, Long> {
     @Override
     Restaurant save(Restaurant restaurant);
 
-    @Override
-    void deleteById(Long id);
+    void deleteById(int id);
+
+    Restaurant findRestaurantByUsername(String username);
+
+
 }

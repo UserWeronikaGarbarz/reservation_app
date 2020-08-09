@@ -1,6 +1,8 @@
 package com.reservation.service;
 
 import com.reservation.domain.Mail;
+import com.reservation.domain.MailRegistration;
+import com.reservation.domain.MailReservation;
 import com.reservation.domain.Reservation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,22 +23,42 @@ public class MailService {
     @Autowired
     private MailCreatorService mailCreatorService;
 
-    public void send(final Mail mail) {
+    public void send(final MailReservation mailReservation) {
         LOGGER.info("Starting email preparation...");
         try {
-            javaMailSender.send(createMimeMessage(mail));
+            javaMailSender.send(createMimeMessage(mailReservation));
         } catch (MailException e) {
             LOGGER.error("Failed to process email sending" + e.getMessage(), e);
         }
+        LOGGER.info("Email has been sent");
     }
-
-    private MimeMessagePreparator createMimeMessage(final Mail mail) {
+    public void send(final MailRegistration mailRegistration) {
+        LOGGER.info("Starting email preparation...");
+        try {
+            javaMailSender.send(createMimeMessage(mailRegistration));
+        } catch (MailException e) {
+            LOGGER.error("Failed to process email sending" + e.getMessage(), e);
+        }
+        LOGGER.info("Email has been sent");
+    }
+    private MimeMessagePreparator createMimeMessage(final MailRegistration mailRegistration) {
         return mimeMessage -> {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
-            mimeMessageHelper.setTo(mail.getEmail());
-            mimeMessageHelper.setSubject(mail.getSubject());
-            mimeMessageHelper.setText(mailCreatorService.buildEmail(mail.getMessage(), mail.getReceiverName(),
-                    mail.getReceiverSurname(), mail.getDone(), mail.getStart(), mail.getEnd()), true);
+            mimeMessageHelper.setTo(mailRegistration.getEmail());
+            mimeMessageHelper.setSubject(mailRegistration.getSubject());
+            mimeMessageHelper.setText(mailCreatorService.buildEmailRegistration(mailRegistration.getMessage(),
+                    mailRegistration.getReceiverName(), mailRegistration.getReceiverSurname(),
+                    mailRegistration.getUsername(), mailRegistration.getPassword()), true);
+        };
+    }
+    private MimeMessagePreparator createMimeMessage(final MailReservation mailReservation) {
+        return mimeMessage -> {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+            mimeMessageHelper.setTo(mailReservation.getEmail());
+            mimeMessageHelper.setSubject(mailReservation.getSubject());
+            mimeMessageHelper.setText(mailCreatorService.buildEmail(mailReservation.getMessage(),
+                    mailReservation.getReceiverName(), mailReservation.getReceiverSurname(),
+                    mailReservation.getDone(), mailReservation.getStart(), mailReservation.getEnd()), true);
         };
     }
 }

@@ -30,9 +30,11 @@ public class GuestMapper {
                 guestDto.getLastLoginDateDisplay(),
                 guestDto.getJoinDate(),
                 guestDto.isActive(),
-                reservationMapper.mapToReservationList(guestDto.getReservationList()),
-                restaurantMapper.mapToListRestaurant(guestDto.getRestaurantDtoList())
-        );
+                guestDto.isNonLocked(),
+                guestDto.getAuthorities(),
+                guestDto.getRole(),
+                reservationMapper.mapToReservationList(guestDto.getReservationDtoList()),
+                restaurantMapper.mapToListRestaurant(guestDto.getRestaurantDtoList()));
     }
 
     public GuestDto mapToGuestDto(Guest guest) {
@@ -48,10 +50,11 @@ public class GuestMapper {
                 guest.getLastLoginDateDisplay(),
                 guest.getJoinDate(),
                 guest.isActive(),
+                guest.isNonLocked(),
+                guest.getAuthorities(),
+                guest.getRole(),
                 reservationMapper.mapToReservationDtoList(guest.getReservationList()),
-                restaurantMapper.mapToListRestaurantDto(guest.getRestaurantList())
-
-        );
+                restaurantMapper.mapToListRestaurantDto(guest.getRestaurantList()));
     }
 
     public List<Guest> mapToGuestList(List<GuestDto> guestDtoList) {
@@ -68,8 +71,12 @@ public class GuestMapper {
                         g.getLastLoginDateDisplay(),
                         g.getJoinDate(),
                         g.isActive(),
-                        reservationMapper.mapToReservationList(g.getReservationList()),
-                        restaurantMapper.mapToListRestaurant(g.getRestaurantDtoList())))
+                        g.isNonLocked(),
+                        g.getAuthorities(),
+                        g.getRole(),
+                        reservationMapper.mapToReservationList(g.getReservationDtoList()),
+                        restaurantMapper.mapToListRestaurant(g.getRestaurantDtoList())
+                ))
                 .collect(Collectors.toList());
     }
 
@@ -87,8 +94,12 @@ public class GuestMapper {
                         g.getLastLoginDateDisplay(),
                         g.getJoinDate(),
                         g.isActive(),
+                        g.isNonLocked(),
+                        g.getAuthorities(),
+                        g.getRole(),
                         reservationMapper.mapToReservationDtoList(g.getReservationList()),
-                        restaurantMapper.mapToListRestaurantDto(g.getRestaurantList())))
+                        restaurantMapper.mapToListRestaurantDto(g.getRestaurantList())
+                ))
                 .collect(Collectors.toList());
     }
 }

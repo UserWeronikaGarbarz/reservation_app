@@ -18,7 +18,4 @@ public class Mail {
     private String message;
     private String receiverName;
     private String receiverSurname;
-    private LocalDate done;
-    private LocalDateTime start;
-    private LocalDateTime end;
 }

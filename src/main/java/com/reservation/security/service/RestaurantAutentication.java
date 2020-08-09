@@ -1,4 +1,4 @@
-package com.reservation.service;
+package com.reservation.security.service;
 
 import com.reservation.domain.Restaurant;
 import com.reservation.repository.AutenticationRepository;

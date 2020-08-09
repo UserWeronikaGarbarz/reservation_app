@@ -1,15 +1,26 @@
-package com.reservation.service;
+package com.reservation.security.service;
 
 import com.reservation.domain.Guest;
 import com.reservation.repository.AutenticationRepository;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.stream;
 
 @Service
-public class GuestAutentication implements AutenticationRepository {
+@AllArgsConstructor
+@Getter
+@Setter
+public class GuestAutentication implements AutenticationRepository, UserDetails {
 
     @Autowired
     private Guest guest;
@@ -31,7 +42,7 @@ public class GuestAutentication implements AutenticationRepository {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return this.guest.isNonLocked();
     }
 
     @Override
@@ -46,6 +57,6 @@ public class GuestAutentication implements AutenticationRepository {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return stream(this.guest.getAuthorities()).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 }

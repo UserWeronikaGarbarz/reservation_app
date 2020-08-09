@@ -28,7 +28,10 @@ public class Guest {
     private Date lastLoginDate;
     private Date lastLoginDateDisplay;
     private Date joinDate;
-    private boolean isActive;
+    private boolean active;
+    private boolean nonLocked;
+    private String[] authorities;
+    private String role;
     private List<Reservation> reservationList = new ArrayList<>();
     private List<Restaurant> restaurantList = new ArrayList<>();
 
@@ -80,33 +83,46 @@ public class Guest {
         return restaurantList;
     }
 
-    @Column(name="USER_ID")
+    @Column(name = "USER_ID")
     public String getUserId() {
         return userId;
     }
 
-    @Column(name="USERNAME")
+    @Column(name = "USERNAME")
     public String getUsername() {
         return username;
     }
 
-    @Column(name="LAST_LOGIN_DATE")
+    @Column(name = "LAST_LOGIN_DATE")
     public Date getLastLoginDate() {
         return lastLoginDate;
     }
 
-    @Column(name="LAST_LOGIN_DATE_DISPLAYED")
+    @Column(name = "LAST_LOGIN_DATE_DISPLAYED")
     public Date getLastLoginDateDisplay() {
         return lastLoginDateDisplay;
     }
 
-    @Column(name="JOIN_DATE")
+    @Column(name = "JOIN_DATE")
     public Date getJoinDate() {
         return joinDate;
     }
 
-    @Column(name="IS_ACTIVE")
+    @Column(name = "IS_ACTIVE")
     public boolean isActive() {
-        return isActive;
+        return active;
+    }
+
+    @Column(name = "NON_LOCKED")
+    public boolean isNonLocked() {
+        return nonLocked;
+    }
+
+    public String[] getAuthorities() {
+        return authorities;
+    }
+
+    public String getRole() {
+        return role;
     }
 }
