@@ -1,7 +1,7 @@
 package com.reservation.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.reservation.security.configuration.SecurityConstant;
+import com.reservation.constant.SecurityConstant;
 import com.reservation.domain.HttpResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;

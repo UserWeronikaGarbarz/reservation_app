@@ -32,6 +32,7 @@ public class Guest {
     private boolean nonLocked;
     private String[] authorities;
     private String role;
+    private String profileImageUrl;
     private List<Reservation> reservationList = new ArrayList<>();
     private List<Restaurant> restaurantList = new ArrayList<>();
 
@@ -124,5 +125,9 @@ public class Guest {
 
     public String getRole() {
         return role;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
     }
 }

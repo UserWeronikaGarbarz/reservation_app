@@ -17,4 +17,10 @@ public interface GuestRepository extends CrudRepository<Guest, Long> {
     Guest findGuestByUsername(String username);
 
     Guest findGuestByEmail(String email);
+
+    Guest findGuestById(int id);
+
+    long count();
+
+    void deleteById(int id);
 }

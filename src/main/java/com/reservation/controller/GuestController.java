@@ -46,5 +46,13 @@ public class GuestController extends ExceptionHandling {
         return guestService.getAllGuests();
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/guest/update")
+    public GuestDto updateGuest(@RequestBody GuestDto guestDto) {
+        return guestMapper.mapToGuestDto(guestService.updateGuest(guestMapper.mapToGuest(guestDto)));
+    }
 
+    @RequestMapping(method = RequestMethod.DELETE, value = "/guest/delete/{id}")
+    public void deleteGuest(@PathVariable int id) {
+        guestService.deleteGuest(id);
+    }
 }

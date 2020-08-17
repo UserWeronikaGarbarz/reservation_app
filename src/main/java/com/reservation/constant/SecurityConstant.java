@@ -1,4 +1,4 @@
-package com.reservation.security.configuration;
+package com.reservation.constant;
 
 public class SecurityConstant {
     public static final String TOKEN_HEADER = "Bearer ";

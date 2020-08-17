@@ -33,6 +33,7 @@ public class GuestMapper {
                 guestDto.isNonLocked(),
                 guestDto.getAuthorities(),
                 guestDto.getRole(),
+                guestDto.getProfileImageUrl(),
                 reservationMapper.mapToReservationList(guestDto.getReservationDtoList()),
                 restaurantMapper.mapToListRestaurant(guestDto.getRestaurantDtoList()));
     }
@@ -53,6 +54,7 @@ public class GuestMapper {
                 guest.isNonLocked(),
                 guest.getAuthorities(),
                 guest.getRole(),
+                guest.getProfileImageUrl(),
                 reservationMapper.mapToReservationDtoList(guest.getReservationList()),
                 restaurantMapper.mapToListRestaurantDto(guest.getRestaurantList()));
     }
@@ -74,6 +76,7 @@ public class GuestMapper {
                         g.isNonLocked(),
                         g.getAuthorities(),
                         g.getRole(),
+                        g.getProfileImageUrl(),
                         reservationMapper.mapToReservationList(g.getReservationDtoList()),
                         restaurantMapper.mapToListRestaurant(g.getRestaurantDtoList())
                 ))
@@ -97,6 +100,7 @@ public class GuestMapper {
                         g.isNonLocked(),
                         g.getAuthorities(),
                         g.getRole(),
+                        g.getProfileImageUrl(),
                         reservationMapper.mapToReservationDtoList(g.getReservationList()),
                         restaurantMapper.mapToListRestaurantDto(g.getRestaurantList())
                 ))

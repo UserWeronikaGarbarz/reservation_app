@@ -4,11 +4,12 @@ import com.reservation.domain.Guest;
 import com.reservation.domain.MailRegistration;
 import com.reservation.dto.GuestDto;
 import com.reservation.exception.EmailExistsException;
+import com.reservation.exception.EmailNotFoundException;
 import com.reservation.exception.GuestNotFoundException;
 import com.reservation.exception.UsernameExistsException;
 import com.reservation.mapper.GuestMapper;
 import com.reservation.repository.GuestRepository;
-import com.reservation.security.configuration.SecurityConstant;
+import com.reservation.constant.SecurityConstant;
 import com.reservation.security.enumeration.Role;
 import com.reservation.security.jwt.JWTTokenProvider;
 import com.reservation.security.service.GuestAutentication;
@@ -29,9 +30,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Date;
 import java.util.List;
+
+import static com.reservation.constant.FileConstant.*;
 
 @Service
 @Transactional
@@ -91,7 +96,9 @@ public class GuestService implements UserDetailsService {
             loginAttemptService.removeUserFromCache(guest.getUsername());
         }
     }
+
     String password = generatePassword();
+
     public Guest register(String firstName, String lastName, String username, String email)
             throws UsernameExistsException, EmailExistsException, GuestNotFoundException {
         validateNewUsernameAndEmail(StringUtils.EMPTY, username, email);
@@ -108,6 +115,7 @@ public class GuestService implements UserDetailsService {
         guestDto.setNonLocked(true);
         guestDto.setAuthorities(Role.ROLE_GUEST.getAuthorities());
         guestDto.setRole(Role.ROLE_GUEST.name());
+        guestDto.setProfileImageUrl(getTemporaryProfileImageUrl(username));
 
         Guest guestRegistered = guestRepository.save(guestMapper.mapToGuest(guestDto));
         sendEmail(guestRegistered);
@@ -115,8 +123,32 @@ public class GuestService implements UserDetailsService {
         return guestRegistered;
     }
 
+//    public Guest updateGuest(String currentUsername, String newFirstname, String newLastName) throws UsernameExistsException, EmailExistsException, GuestNotFoundException {
+//        validateNewUsernameAndEmail(StringUtils.EMPTY, guest.getUsername(), guest.getEmail());
+//        return guestRepository.save(guest);
+//    }
+
+    private void saveProfileImage(Guest guest, MultipartFile profileImage) {
+
+    }
+
+    private String setProfileImageUrl(String username) {
+        return ServletUriComponentsBuilder.fromCurrentContextPath().path(USER_IMAGE_PATH + username + FORWARD_SLASH
+                + username + DOT + JPG_EXTENSION).toUriString();
+    }
+
+    private String getTemporaryProfileImageUrl(String username) {
+        return ServletUriComponentsBuilder.fromCurrentContextPath().path(DEFAULT_USER_IMAGE_PATH + username).toUriString();
+    }
+
+    public Guest updateProfileImage(String username, MultipartFile profileImage) throws UsernameExistsException, EmailExistsException, GuestNotFoundException {
+        Guest guest = validateNewUsernameAndEmail(username, null, null);
+        saveProfileImage(guest, profileImage);
+        return guest;
+    }
+
     public void sendEmail(Guest guest) {
-        mailService.send(new MailRegistration(guest.getEmail(),"New account in Restaurant-app", "Your account has been created",
+        mailService.send(new MailRegistration(guest.getEmail(), "New account in Restaurant-app", "Your account has been created",
                 guest.getName(), guest.getSurname(), password,
                 guest.getUsername()));
     }
@@ -133,7 +165,7 @@ public class GuestService implements UserDetailsService {
         return RandomStringUtils.randomNumeric(10);
     }
 
-    private void validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail)
+    private Guest validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail)
             throws GuestNotFoundException, EmailExistsException, UsernameExistsException {
 
         Guest byEmail = findGuestByEmail(newEmail);
@@ -158,6 +190,18 @@ public class GuestService implements UserDetailsService {
                 throw new EmailExistsException("Email already exists");
             }
         }
+        return null;
+    }
+
+    public void authenticate(String username, String password) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+    }
+
+    public HttpHeaders getJwtHeader(Guest guest) {
+        GuestAutentication guestAutentication = new GuestAutentication(guest);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(SecurityConstant.JWT_TOKEN_HEADER, jwtTokenProvider.generateJWTToken(guestAutentication));
+        return httpHeaders;
     }
 
     public List<Guest> getAllGuests() {
@@ -173,14 +217,22 @@ public class GuestService implements UserDetailsService {
         return guestRepository.findGuestByEmail(email);
     }
 
-    public HttpHeaders getJwtHeader(Guest guest) {
-        GuestAutentication guestAutentication = new GuestAutentication(guest);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(SecurityConstant.JWT_TOKEN_HEADER, jwtTokenProvider.generateJWTToken(guestAutentication));
-        return httpHeaders;
+    public Guest findGuestById(int id) {
+        return guestRepository.findGuestById(id);
     }
 
-    public void authenticate(String username, String password) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+    public void deleteGuest(int id) {
+        guestRepository.deleteById(id);
+    }
+
+    public void resetPassword(String email) throws EmailNotFoundException {
+        Guest guest = guestRepository.findGuestByEmail(email);
+        if (guest == null) {
+            throw new EmailNotFoundException(USER_NOT_FOUND_BY_EMAIL + email);
+        }
+        String password = generatePassword();
+        guest.setPassword(encodePassword(password));
+        guestRepository.save(guest);
+        mailService.sendPasswordEmail();
     }
 }

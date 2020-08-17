@@ -1,9 +1,7 @@
 package com.reservation.service;
 
-import com.reservation.domain.Mail;
 import com.reservation.domain.MailRegistration;
 import com.reservation.domain.MailReservation;
-import com.reservation.domain.Reservation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,7 @@ public class MailService {
         }
         LOGGER.info("Email has been sent");
     }
+
     public void send(final MailRegistration mailRegistration) {
         LOGGER.info("Starting email preparation...");
         try {
@@ -41,6 +40,11 @@ public class MailService {
         }
         LOGGER.info("Email has been sent");
     }
+
+    public void sendPasswordEmail() {
+
+    }
+
     private MimeMessagePreparator createMimeMessage(final MailRegistration mailRegistration) {
         return mimeMessage -> {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
@@ -51,6 +55,7 @@ public class MailService {
                     mailRegistration.getUsername(), mailRegistration.getPassword()), true);
         };
     }
+
     private MimeMessagePreparator createMimeMessage(final MailReservation mailReservation) {
         return mimeMessage -> {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);

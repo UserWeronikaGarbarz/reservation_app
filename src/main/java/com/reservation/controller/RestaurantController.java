@@ -28,6 +28,8 @@ public class RestaurantController {
     @RequestMapping(method = RequestMethod.POST, value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public RestaurantDto createRestaurant(@RequestBody RestaurantDto restaurantDto) {
         return restaurantMapper.mapToRestaurantDto(restaurantService
-                .saveRestaurant(restaurantMapper.mapToRestaurant(restaurantDto)));
+                .addRestaurant(restaurantMapper.mapToRestaurant(restaurantDto)));
     }
+
+
 }

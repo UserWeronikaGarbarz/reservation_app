@@ -9,7 +9,6 @@ public interface RestaurantRepository extends CrudRepository<Restaurant, Long> {
     @Override
     List<Restaurant> findAll();
 
-    @Override
     long count();
 
     @Override
@@ -19,5 +18,13 @@ public interface RestaurantRepository extends CrudRepository<Restaurant, Long> {
 
     Restaurant findRestaurantByUsername(String username);
 
+    Restaurant findRestaurantByName(String name);
+
+    Restaurant findRestaurantByEmail(String email);
+
+    Restaurant findRestaurantById(int id);
+
+    @Override
+    void deleteById(Long id);
 
 }

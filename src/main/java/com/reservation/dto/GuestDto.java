@@ -30,6 +30,7 @@ public class GuestDto {
     private boolean nonLocked;
     private String[] authorities;
     private String role;
+    private String profileImageUrl;
     private List<ReservationDto> reservationDtoList = new ArrayList<>();
     private List<RestaurantDto> restaurantDtoList = new ArrayList<>();
 }

@@ -1,5 +1,6 @@
 package com.reservation.security.configuration;
 
+import com.reservation.constant.SecurityConstant;
 import com.reservation.security.jwt.JWTAccessDeniedHandler;
 import com.reservation.security.jwt.JWTAuthenticationEntryPoint;
 import com.reservation.security.jwt.JWTAuthoriastionFilter;
